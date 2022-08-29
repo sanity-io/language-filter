@@ -1,4 +1,3 @@
-import {TranslateIcon} from '@sanity/icons'
 import {Box, Button, Card, Checkbox, Flex, Popover, Stack, Text, useClickOutside} from '@sanity/ui'
 import React, {FormEvent, useCallback, useState} from 'react'
 import {usePaneLanguages} from './usePaneLanguages'
@@ -92,7 +91,6 @@ export function LanguageFilterMenuButton(props: LanguageFilterMenuButtonProps) {
   return (
     <Popover constrainSize content={content} open={open} portal ref={setPopover}>
       <Button
-        icon={TranslateIcon}
         text={`Filter languages (${visibleLanguages.length}/${options.supportedLanguages.length})`}
         mode="bleed"
         onClick={handleClick}
