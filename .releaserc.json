@@ -2,7 +2,6 @@
   "extends": "@sanity/semantic-release-preset",
   "branches": [
     "semver-main-placeholder",
-    {"name": "main", "channel": "studio-v3", "prerelease": "v3-studio"},
-    {"name": "firstpass-v3-impl", "channel": "first-pass", "prerelease": true}
+    {"name": "main", "channel": "studio-v3", "prerelease": "v3-studio"}
   ]
 }
