@@ -5,19 +5,23 @@ import {LanguageFilterConfig} from './types'
 
 export interface LanguageFilterMenuButtonProps {
   options: LanguageFilterConfig
+  onSelectedIdsChange: (ids: string[]) => void
 }
 
 export function LanguageFilterMenuButton(props: LanguageFilterMenuButtonProps) {
-  const {options} = props
+  const {options, onSelectedIdsChange} = props
+
   const defaultLanguages = options.supportedLanguages.filter((l) =>
     options.defaultLanguages?.includes(l.id)
   )
+
   const languageOptions = options.supportedLanguages.filter(
     (l) => !options.defaultLanguages?.includes(l.id)
   )
   const [open, setOpen] = useState(false)
-  const {visibleLanguages, allSelected, selectAll, selectNone, toggleLanguage} = usePaneLanguages({
+  const {activeLanguages, allSelected, selectAll, selectNone, toggleLanguage} = usePaneLanguages({
     options,
+    onSelectedIdsChange,
   })
   const [button, setButton] = useState<HTMLElement | null>(null)
   const [popover, setPopover] = useState<HTMLElement | null>(null)
@@ -44,11 +48,13 @@ export function LanguageFilterMenuButton(props: LanguageFilterMenuButtonProps) {
   const content = (
     <Box overflow="auto" padding={1}>
       {defaultLanguages.length > 0 && (
-        <Card radius={2} tone="primary">
+        <Card radius={2}>
           <Stack padding={2} space={3}>
-            <Text size={1} weight="semibold">
-              Default language{defaultLanguages.length > 1 && <>s</>}
-            </Text>
+            <Box paddingBottom={2}>
+              <Text size={1} weight="semibold">
+                Default language{defaultLanguages.length > 1 && <>s</>}
+              </Text>
+            </Box>
 
             {defaultLanguages.map((l) => (
               <Text key={l.id}>{l.title}</Text>
@@ -58,7 +64,7 @@ export function LanguageFilterMenuButton(props: LanguageFilterMenuButtonProps) {
       )}
 
       <Stack marginTop={3} padding={2} space={2}>
-        <Box paddingBottom={1}>
+        <Box paddingBottom={2}>
           <Text size={1} weight="semibold">
             Show translations
           </Text>
@@ -80,7 +86,7 @@ export function LanguageFilterMenuButton(props: LanguageFilterMenuButtonProps) {
             id={lang.id}
             key={lang.id}
             onToggle={toggleLanguage}
-            selected={visibleLanguages.includes(lang.id)}
+            selected={activeLanguages.includes(lang.id)}
             title={lang.title}
           />
         ))}
@@ -88,10 +94,25 @@ export function LanguageFilterMenuButton(props: LanguageFilterMenuButtonProps) {
     </Box>
   )
 
+  const langCount = options.supportedLanguages.length
   return (
-    <Popover constrainSize content={content} open={open} portal ref={setPopover}>
+    <Popover content={content} open={open} portal ref={setPopover}>
       <Button
-        text={`Filter languages (${visibleLanguages.length}/${options.supportedLanguages.length})`}
+        text={
+          <Flex gap={1}>
+            <Box>Filter languages:</Box>
+            <Flex gap={1} justify="space-around">
+              <Flex
+                style={{width: `${Math.floor(Math.log10(langCount) + 1)}ch`}}
+                justify="flex-end"
+              >
+                {activeLanguages.length}
+              </Flex>
+              <Box>/</Box>
+              <Box>{langCount}</Box>
+            </Flex>
+          </Flex>
+        }
         mode="bleed"
         onClick={handleClick}
         ref={setButton}

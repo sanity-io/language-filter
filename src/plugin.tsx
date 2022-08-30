@@ -4,6 +4,8 @@ import {LanguageFilterObjectInput} from './LanguageFilterObjectInput'
 import {LanguageFilterMenuButton} from './LanguageFilterMenuButton'
 import {LanguageFilterConfig} from './types'
 import {isLanguageFilterEnabled} from './filterField'
+import {LanguageFilterProvider} from './LanguageFilterContext'
+import {createSelectedLanguageIdsBus} from './languageSubscription'
 
 /**
  * ## Usage in sanity.config.ts (or .js)
@@ -39,8 +41,10 @@ import {isLanguageFilterEnabled} from './filterField'
  * ```
  */
 export const languageFilter = createPlugin<LanguageFilterConfig>((options) => {
+  const {onSelectedIdsChange, subscribeSelectedIds} = createSelectedLanguageIdsBus()
+
   const RenderLanguageFilter: _DocumentLanguageFilterComponent = () => {
-    return <LanguageFilterMenuButton options={options} />
+    return <LanguageFilterMenuButton options={options} onSelectedIdsChange={onSelectedIdsChange} />
   }
 
   return {
@@ -57,10 +61,25 @@ export const languageFilter = createPlugin<LanguageFilterConfig>((options) => {
     form: {
       renderInput(props, next) {
         const enabled = isLanguageFilterEnabled(props.schemaType, options)
-        if (enabled && props.schemaType.jsonType === 'object') {
-          return <LanguageFilterObjectInput {...(props as ObjectInputProps)} options={options} />
+        // will only be considered enabled for document, so this is only done once
+        if (enabled) {
+          return (
+            <LanguageFilterProvider enabled={enabled} options={options}>
+              {next(props)}
+            </LanguageFilterProvider>
+          )
         }
-        return next(props)
+        if (props.schemaType.jsonType === 'object') {
+          return (
+            <LanguageFilterObjectInput
+              {...(props as ObjectInputProps)}
+              next={next}
+              subscribeSelectedIds={subscribeSelectedIds}
+            />
+          )
+        }
+
+        return undefined
       },
     },
   }
