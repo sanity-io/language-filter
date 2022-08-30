@@ -1,32 +1,137 @@
 # @sanity/language-filter
 
+> **NOTE**
+>
+> This is the **Sanity Studio v3 version** of @sanity/language-filter.
+>
+> For the v2 version, please refer to the [v2 version](https://github.com/sanity-io/sanity/tree/next/packages/%40sanity/language-filter).
+
+# Field-level translation filter Plugin for Sanity.io
+
+A Sanity plugin that supports filtering localized fields by language
+
+![Language Filter UI](https://user-images.githubusercontent.com/9684022/150549913-68f1b7c7-3305-48b4-b72b-41b95e82450c.gif)
+
+## What this plugin solves
+
+There are two popular methods of internationalization in Sanity Studio:
+
+- **Field-level translation**
+  - A single document with many languages of content
+  - Achieved by mapping over languages on each field, to create an object
+  - Best for documents that have a mix of language-specific and common fields
+  - Not recommended for Portable Text
+- **Document-level translation**
+  - A unique document version for every language
+  - Joined together by references and/or a predictable `_id`
+  - Best for documents that have unique, language-specific fields and no common content across languages
+  - Best for translating content using Portable Text
+
+This plugin adds features to the Studio to improve handling **field-level translations**.
+
+- A "Filter Languages" button to show/hide fields in an object of language-specific fields
+- Configuration to set "default" languages which are always visible
+
+For **document-level translations** you should use the [@sanity/document-internationalization plugin](https://www.npmjs.com/package/@sanity/document-internationalization).
+
+
 ## Installation
 
 ```
-npm install --save sanity-plugin-language-filter
+npm install --save @sanity/language-filter@studio-v3
 ```
 
 or
 
 ```
-yarn add sanity-plugin-language-filter
+yarn add @sanity/language-filter@studio-v3
 ```
 
 ## Usage
-Add it as a plugin in sanity.config.ts (or .js):
+Add it as a plugin in sanity.config.ts (or .js), and configure it:
 
 ```
  import {createConfig} from 'sanity'
- import {myPlugin} from 'sanity-plugin-language-filter'
+ import {languageFilter} from '@sanity/language-filter'
 
  export const createConfig({
-     /...
+     //...
      plugins: [
-         myPlugin({})
+        languageFilter({
+            supportedLanguages: [
+              {id: 'nb', title: 'Norwegian (Bokmål)'},
+              {id: 'nn', title: 'Norwegian (Nynorsk)'},
+              {id: 'en', title: 'English'},
+              {id: 'es', title: 'Spanish'},
+              {id: 'arb', title: 'Arabic'},
+              {id: 'pt', title: 'Portuguese'},
+              //...
+            ],
+            // Select Norwegian (Bokmål) by default
+            defaultLanguages: ['nb'],
+            // Only show language filter for document type `page` (schemaType.name)
+            documentTypes: ['page'],
+            filterField: (enclosingType, field, selectedLanguageIds) =>
+              !enclosingType.name.startsWith('locale') || selectedLanguageIds.includes(field.name),
+       })
      ]
  })
 ```
+
+Config properties:
+- `supportedLanguages` is an array of languages with `id` and `title`. If your localized fields are defined using our recommended way described here (https://www.sanity.io/docs/localization), you probably want to share this list of supported languages between this config and your schema.
+- `defaultLanguages` (optional) is an array of strings where each entry must match an `id` from the `supportedLanguages` array. These languages will be listed by default and will not be possible to unselect. If no `defaultLanguages` is configured, all localized fields will be selected by default.
+- `documentTypes` (optional) is an array of strings where each entry must match a `name` from your document schemas. If defined, this property will be used to conditionally show the language filter on specific document schema types. If undefined, the language filter will show on all document schema types.
+- `filterField` (optional) is a function that must return true if the field should be displayed. It is passed the enclosing type (e.g the object type containing the localized fields, the field, and an array of the currently selected language ids.
+This function is called for all fields and fieldsets in objects for documents that have language filter enabled. 
+_Default:_ `!enclosingType.name.startsWith('locale') || selectedLanguageIds.includes(field.name)`
+
+## Changes in V3
+
+### filterField
+`filerField` will also be passed any fieldsets in the enclosing object, when present.
+
+### documentTypes
+Language filter can now be enabled/disabled directly from a schema, using `options.languageFilter: boolean`.
+When `documentTypes` is omitted from plugin config, use `options.languageFilter: false` in a document-definition to hide the filter button.
+When `documentTypes` is provided in plugin config, use `options.languageFilter: true` in a document-definition to show the filter button.
+
+Example:
+
+```js
+export const myDocumentSchema = {
+  type: 'document',
+  name: 'my-enabled-language-filter-document',
+  /** ... */
+  options: {
+    // show language filter for this document type, regardless of how documentTypes for the plugin is configured
+    languageFilter: true
+  }
+}
+```
+
+### State management
+Selected languages are now stored as `langs` url-param state; this allows users to copy paste
+a url in the studio with the currently selected languages preselected.
+
+Previously this state was stored in localstorage.
+
 ## License
 
 MIT © Sanity.io
 See LICENSE
+
+## Develop
+
+This plugin uses [@sanity/plugin-kit](https://github.com/sanity-io/plugin-kit)
+with default configuration for build & watch scripts.
+
+See [Testing a plugin in Sanity Studio](https://github.com/sanity-io/plugin-kit#testing-a-plugin-in-sanity-studio)
+on how to run this plugin with hotreload in the studio.
+
+### Release new version
+
+Run ["CI & Release" workflow](https://github.com/sanity-io/language-filter/actions/workflows/main.yml).
+Make sure to select the main branch and check "Release new version".
+
+Semantic release will only release on configured branches, so it is safe to run release on any branch.
