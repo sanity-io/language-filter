@@ -1,6 +1,6 @@
 {
   "name": "@sanity/language-filter",
-  "version": "1.0.0-firstpass-v3-impl.1",
+  "version": "1.0.0",
   "description": "A Sanity plugin that supports filtering localized fields by language",
   "author": "Sanity.io <hello@sanity.io>",
   "license": "MIT",
