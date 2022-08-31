@@ -61,11 +61,30 @@ function FilteredObjectInput(props: LanguageFilterObjectInputProps) {
   const filterField = options.filterField ?? defaultFilterField
 
   const members: ObjectMember[] = useMemo(() => {
-    return membersProp.filter(
-      (member) =>
-        (member.kind === 'field' && filterField(schemaType, member, activeLanguages)) ||
-        (member.kind === 'fieldSet' && filterField(schemaType, member.fieldSet, activeLanguages))
-    )
+    return membersProp
+      .filter((member) => {
+        return (
+          (member.kind === 'field' && filterField(schemaType, member, activeLanguages)) ||
+          member.kind === 'fieldSet'
+        )
+      })
+      .map((member) => {
+        if (member.kind === 'fieldSet') {
+          return {
+            ...member,
+            fieldSet: {
+              ...member.fieldSet,
+              members: member.fieldSet.members.filter((fieldsetMember) => {
+                return (
+                  fieldsetMember.kind === 'field' &&
+                  filterField(schemaType, fieldsetMember, activeLanguages)
+                )
+              }),
+            },
+          }
+        }
+        return member
+      })
   }, [schemaType, membersProp, filterField, activeLanguages])
 
   return <>{next({...restProps, members, schemaType})}</>

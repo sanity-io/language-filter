@@ -83,13 +83,10 @@ Config properties:
 - `defaultLanguages` (optional) is an array of strings where each entry must match an `id` from the `supportedLanguages` array. These languages will be listed by default and will not be possible to unselect. If no `defaultLanguages` is configured, all localized fields will be selected by default.
 - `documentTypes` (optional) is an array of strings where each entry must match a `name` from your document schemas. If defined, this property will be used to conditionally show the language filter on specific document schema types. If undefined, the language filter will show on all document schema types.
 - `filterField` (optional) is a function that must return true if the field should be displayed. It is passed the enclosing type (e.g the object type containing the localized fields, the field, and an array of the currently selected language ids.
-This function is called for all fields and fieldsets in objects for documents that have language filter enabled. 
+This function is called for all fields and in objects for documents that have language filter enabled. 
 _Default:_ `!enclosingType.name.startsWith('locale') || selectedLanguageIds.includes(field.name)`
 
 ## Changes in V3
-
-### filterField
-`filerField` will also be passed any fieldsets in the enclosing object, when present.
 
 ### documentTypes
 Language filter can now be enabled/disabled directly from a schema, using `options.languageFilter: boolean`.
