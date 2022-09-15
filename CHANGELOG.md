@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.0-v3-studio.3](https://github.com/sanity-io/language-filter/compare/v3.0.0-v3-studio.2...v3.0.0-v3-studio.3) (2022-09-15)
+
+### Bug Fixes
+
+- **deps:** sanity 3.0.0-dev-preview.17 ([efc0030](https://github.com/sanity-io/language-filter/commit/efc003094b3018c7842f0019d19c4cede7fedc3e))
+
 ## [3.0.0-v3-studio.2](https://github.com/sanity-io/language-filter/compare/v3.0.0-v3-studio.1...v3.0.0-v3-studio.2) (2022-08-31)
 
 ### Bug Fixes
