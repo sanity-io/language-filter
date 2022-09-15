@@ -22,9 +22,5 @@ export function LanguageFilterProvider({
 }
 
 export function useLanguageFilterContext() {
-  const value = useContext(LanguageFilterContext)
-  if (!value) {
-    throw new Error('LanguageFilterContext is missing')
-  }
-  return value
+  return useContext(LanguageFilterContext)
 }

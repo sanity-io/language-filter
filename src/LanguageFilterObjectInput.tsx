@@ -22,7 +22,8 @@ export function LanguageFilterObjectInput(
     subscribeSelectedIds: (callback: (ids: string[]) => void) => () => void
   }
 ) {
-  const {options, enabled} = useLanguageFilterContext()
+  const context = useLanguageFilterContext()
+  const {options, enabled} = context || {}
   const {next, subscribeSelectedIds, ...restProps} = props
   if (!enabled || !options) {
     return <>{next(restProps)}</>
