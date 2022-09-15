@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.0-v3-studio.4](https://github.com/sanity-io/language-filter/compare/v3.0.0-v3-studio.3...v3.0.0-v3-studio.4) (2022-09-15)
+
+### Bug Fixes
+
+- documents without languge-filter should no longer crash ([6bffbe7](https://github.com/sanity-io/language-filter/commit/6bffbe7d1051be45f7f3a0c49e281305b929f857))
+
 ## [3.0.0-v3-studio.3](https://github.com/sanity-io/language-filter/compare/v3.0.0-v3-studio.2...v3.0.0-v3-studio.3) (2022-09-15)
 
 ### Bug Fixes
