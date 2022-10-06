@@ -1,5 +1,5 @@
 import React from 'react'
-import {_DocumentLanguageFilterComponent, createPlugin, ObjectInputProps} from 'sanity'
+import {createPlugin, DocumentLanguageFilterComponent, ObjectInputProps} from 'sanity'
 import {LanguageFilterObjectInput} from './LanguageFilterObjectInput'
 import {LanguageFilterMenuButton} from './LanguageFilterMenuButton'
 import {LanguageFilterConfig} from './types'
@@ -43,7 +43,7 @@ import {createSelectedLanguageIdsBus} from './languageSubscription'
 export const languageFilter = createPlugin<LanguageFilterConfig>((options) => {
   const {onSelectedIdsChange, subscribeSelectedIds} = createSelectedLanguageIdsBus()
 
-  const RenderLanguageFilter: _DocumentLanguageFilterComponent = () => {
+  const RenderLanguageFilter: DocumentLanguageFilterComponent = () => {
     return <LanguageFilterMenuButton options={options} onSelectedIdsChange={onSelectedIdsChange} />
   }
 
@@ -59,27 +59,29 @@ export const languageFilter = createPlugin<LanguageFilterConfig>((options) => {
     },
 
     form: {
-      renderInput(props, next) {
-        const enabled = isLanguageFilterEnabled(props.schemaType, options)
-        // will only be considered enabled for document, so this is only done once
-        if (enabled) {
-          return (
-            <LanguageFilterProvider enabled={enabled} options={options}>
-              {next(props)}
-            </LanguageFilterProvider>
-          )
-        }
-        if (props.schemaType.jsonType === 'object') {
-          return (
-            <LanguageFilterObjectInput
-              {...(props as ObjectInputProps)}
-              next={next}
-              subscribeSelectedIds={subscribeSelectedIds}
-            />
-          )
-        }
+      components: {
+        // eslint-disable-next-line func-name-matching
+        input: function LanguageFilterWrapper(props) {
+          const enabled = isLanguageFilterEnabled(props.schemaType, options)
+          // will only be considered enabled for document, so this is only done once
+          if (enabled) {
+            return (
+              <LanguageFilterProvider enabled={enabled} options={options}>
+                {props.renderDefault(props)}
+              </LanguageFilterProvider>
+            )
+          }
+          if (props.schemaType.jsonType === 'object') {
+            return (
+              <LanguageFilterObjectInput
+                {...(props as ObjectInputProps)}
+                subscribeSelectedIds={subscribeSelectedIds}
+              />
+            )
+          }
 
-        return undefined
+          return props.renderDefault(props)
+        },
       },
     },
   }

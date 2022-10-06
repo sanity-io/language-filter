@@ -1,5 +1,5 @@
 import React, {useEffect, useMemo} from 'react'
-import {ObjectInputProps, ObjectMember, RenderInputCallback} from 'sanity'
+import {ObjectInputProps, ObjectMember} from 'sanity'
 import {LanguageFilterConfig} from './types'
 import {defaultFilterField} from './filterField'
 import {useLanguageFilterContext} from './LanguageFilterContext'
@@ -7,7 +7,6 @@ import {useSelectedLanguageIds} from './useSelectedLanguageIds'
 
 export type LanguageFilterObjectInputProps = {
   options: LanguageFilterConfig
-  next: RenderInputCallback
   /**
    * We need a way to communicate state changes between the pane menu and input components.
    * LanguageFilter button lives outside the input-render tree, so Context is out.
@@ -18,20 +17,18 @@ export type LanguageFilterObjectInputProps = {
 
 export function LanguageFilterObjectInput(
   props: ObjectInputProps & {
-    next: RenderInputCallback
     subscribeSelectedIds: (callback: (ids: string[]) => void) => () => void
   }
 ) {
   const context = useLanguageFilterContext()
   const {options, enabled} = context || {}
-  const {next, subscribeSelectedIds, ...restProps} = props
+  const {subscribeSelectedIds, ...restProps} = props
   if (!enabled || !options) {
-    return <>{next(restProps)}</>
+    return props.renderDefault(restProps)
   }
   return (
     <FilteredObjectInput
       {...restProps}
-      next={next}
       options={options}
       subscribeSelectedIds={subscribeSelectedIds}
     />
@@ -43,7 +40,7 @@ function FilteredObjectInput(props: LanguageFilterObjectInputProps) {
     members: membersProp,
     options,
     schemaType,
-    next,
+    renderDefault,
     subscribeSelectedIds,
     ...restProps
   } = props
@@ -88,5 +85,5 @@ function FilteredObjectInput(props: LanguageFilterObjectInputProps) {
       })
   }, [schemaType, membersProp, filterField, activeLanguages])
 
-  return <>{next({...restProps, members, schemaType})}</>
+  return renderDefault({...restProps, members, schemaType, renderDefault})
 }
