@@ -7,10 +7,14 @@ describe('filterField', () => {
       name: 'some-doc',
       jsonType: 'object',
       fields: [],
+      // eslint-disable-next-line camelcase
+      __experimental_search: [],
       type: {
         name: 'document',
         jsonType: 'object',
         fields: [],
+        // eslint-disable-next-line camelcase
+        __experimental_search: [],
       },
     }
     it('should be enabled when documentTypes is missing', () => {
@@ -48,6 +52,8 @@ describe('filterField', () => {
       name: 'locale_parent',
       jsonType: 'object',
       fields: [],
+      // eslint-disable-next-line camelcase
+      __experimental_search: [],
     }
     const member: FieldMember = {
       name: 'nb',
