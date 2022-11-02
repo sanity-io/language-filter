@@ -51,10 +51,10 @@ yarn add @sanity/language-filter@studio-v3
 Add it as a plugin in sanity.config.ts (or .js), and configure it:
 
 ```
- import {createConfig} from 'sanity'
+ import {defineConfig} from 'sanity'
  import {languageFilter} from '@sanity/language-filter'
 
- export const createConfig({
+ export const defineConfig({
      //...
      plugins: [
         languageFilter({
@@ -115,10 +115,9 @@ Previously this state was stored in localstorage.
 
 ## License
 
-MIT © Sanity.io
-See LICENSE
+MIT-licensed. See LICENSE.
 
-## Develop
+## Develop & test
 
 This plugin uses [@sanity/plugin-kit](https://github.com/sanity-io/plugin-kit)
 with default configuration for build & watch scripts.
@@ -132,7 +131,3 @@ Run ["CI & Release" workflow](https://github.com/sanity-io/language-filter/actio
 Make sure to select the main branch and check "Release new version".
 
 Semantic release will only release on configured branches, so it is safe to run release on any branch.
-
-Note: main branch is configured to release a studio-v3 tagged version of the plugin.
-To make semantic-release happy, the branch "semver-main-placeholder" is regarded as the non-prerelease branch,
-but it is unused. The v2 version lives in the sanity mono-repo.

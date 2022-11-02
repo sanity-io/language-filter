@@ -1,5 +1,5 @@
 import React from 'react'
-import {createPlugin, DocumentLanguageFilterComponent, ObjectInputProps} from 'sanity'
+import {definePlugin, DocumentLanguageFilterComponent, ObjectInputProps} from 'sanity'
 import {LanguageFilterObjectInput} from './LanguageFilterObjectInput'
 import {LanguageFilterMenuButton} from './LanguageFilterMenuButton'
 import {LanguageFilterConfig} from './types'
@@ -11,10 +11,10 @@ import {createSelectedLanguageIdsBus} from './languageSubscription'
  * ## Usage in sanity.config.ts (or .js)
  *
  * ```
- * import {createConfig} from 'sanity'
+ * import {defineConfig} from 'sanity'
  * import {languageFilter} from '@sanity/language-filter'
  *
- * export const createConfig({
+ * export const defineConfig({
  *     /...
  *     plugins: [
  *         languageFilter({
@@ -40,7 +40,7 @@ import {createSelectedLanguageIdsBus} from './languageSubscription'
  * })
  * ```
  */
-export const languageFilter = createPlugin<LanguageFilterConfig>((options) => {
+export const languageFilter = definePlugin<LanguageFilterConfig>((options) => {
   const {onSelectedIdsChange, subscribeSelectedIds} = createSelectedLanguageIdsBus()
 
   const RenderLanguageFilter: DocumentLanguageFilterComponent = () => {
