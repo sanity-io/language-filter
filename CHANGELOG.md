@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.0-v3-studio.9](https://github.com/sanity-io/language-filter/compare/v3.0.0-v3-studio.8...v3.0.0-v3-studio.9) (2022-11-04)
+
+### Bug Fixes
+
+- **deps:** pin dependencies ([#12](https://github.com/sanity-io/language-filter/issues/12)) ([6dc9c88](https://github.com/sanity-io/language-filter/commit/6dc9c8896b51871a48267658845767ef1f6e8b0e))
+- **deps:** update sanity-ui-pin ([#13](https://github.com/sanity-io/language-filter/issues/13)) ([d061ad7](https://github.com/sanity-io/language-filter/commit/d061ad7b28ad3d5c5d17e757c0e57e3388541663))
+
 ## [3.0.0-v3-studio.8](https://github.com/sanity-io/language-filter/compare/v3.0.0-v3-studio.7...v3.0.0-v3-studio.8) (2022-11-03)
 
 ### Bug Fixes
