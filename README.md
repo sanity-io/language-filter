@@ -1,9 +1,6 @@
 # @sanity/language-filter
 
-> **NOTE**
->
-> This is the **Sanity Studio v3 version** of @sanity/language-filter.
->
+> This is a **Sanity Studio v3** plugin.
 > For the v2 version, please refer to the [v2 version](https://github.com/sanity-io/sanity/tree/next/packages/%40sanity/language-filter).
 
 # Field-level translation filter Plugin for Sanity.io
@@ -38,13 +35,13 @@ For **document-level translations** you should use the [@sanity/document-interna
 ## Installation
 
 ```
-npm install --save @sanity/language-filter@studio-v3
+npm install --save @sanity/language-filter
 ```
 
 or
 
 ```
-yarn add @sanity/language-filter@studio-v3
+yarn add @sanity/language-filter
 ```
 
 ## Usage
