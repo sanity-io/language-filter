@@ -5,6 +5,31 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.0](https://github.com/sanity-io/language-filter/compare/v2.35.2...v3.0.0) (2022-11-25)
+
+### ⚠ BREAKING CHANGES
+
+- initial Sanity Studio v3 release
+
+### Features
+
+- initial Sanity Studio v3 release ([750f13a](https://github.com/sanity-io/language-filter/commit/750f13af998dd7149f97489933eb5677cba0c1fe))
+- initial v3 plugin impl ([#4](https://github.com/sanity-io/language-filter/issues/4)) ([0bc3072](https://github.com/sanity-io/language-filter/commit/0bc3072ee852e62dc1b2ce957b3a3aa798f37e7f))
+
+### Bug Fixes
+
+- compiled for sanity 3.0.0-rc.0 ([67b94ea](https://github.com/sanity-io/language-filter/commit/67b94ead55f4cda1ff981b2d5665a98d3b810473))
+- **deps:** @sanity/util ([2c00b6e](https://github.com/sanity-io/language-filter/commit/2c00b6e6f39ad9cb5c873a807059809b0c58d9b3))
+- **deps:** dev-preview.21 ([96b2250](https://github.com/sanity-io/language-filter/commit/96b2250050de0d417fa894061c4f34158974919c))
+- **deps:** dev-preview.22 ([36658f2](https://github.com/sanity-io/language-filter/commit/36658f2a6821dce0188b4bdc8d187d46b06fa063))
+- **deps:** pin dependencies ([#12](https://github.com/sanity-io/language-filter/issues/12)) ([6dc9c88](https://github.com/sanity-io/language-filter/commit/6dc9c8896b51871a48267658845767ef1f6e8b0e))
+- **deps:** pkg-utils & @sanity/plugin-kit ([5359efc](https://github.com/sanity-io/language-filter/commit/5359efc2a82da556b5b3db5ea2c1f370a5401cd9))
+- **deps:** sanity 3.0.0-dev-preview.17 ([efc0030](https://github.com/sanity-io/language-filter/commit/efc003094b3018c7842f0019d19c4cede7fedc3e))
+- **deps:** update sanity-ui-pin ([#13](https://github.com/sanity-io/language-filter/issues/13)) ([d061ad7](https://github.com/sanity-io/language-filter/commit/d061ad7b28ad3d5c5d17e757c0e57e3388541663))
+- documents without languge-filter should no longer crash ([6bffbe7](https://github.com/sanity-io/language-filter/commit/6bffbe7d1051be45f7f3a0c49e281305b929f857))
+- fields within fieldsets are now filtered ([afb7c14](https://github.com/sanity-io/language-filter/commit/afb7c1496fef4fe088fdfdd8af58fb789d7835d7))
+- removed some exports ([7656488](https://github.com/sanity-io/language-filter/commit/7656488f7ad876e3e8b1898ca003d1fc15a3a491))
+
 ## [2.36.0](https://github.com/sanity-io/language-filter/compare/v2.35.2...v2.36.0) (2022-11-25)
 
 ### Features
