@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.1](https://github.com/sanity-io/language-filter/compare/v3.0.0...v3.0.1) (2023-03-08)
+
+### Bug Fixes
+
+- prevent dropdown overflow when language list is too long ([62256cd](https://github.com/sanity-io/language-filter/commit/62256cdc3d771e4ded14a80ad0e13ae5610a4bfa)), closes [#27](https://github.com/sanity-io/language-filter/issues/27)
+
 ## [3.0.0](https://github.com/sanity-io/language-filter/compare/v2.35.2...v3.0.0) (2022-11-25)
 
 ### ⚠ BREAKING CHANGES
