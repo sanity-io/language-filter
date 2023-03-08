@@ -1,7 +1,12 @@
 import {Box, Button, Card, Checkbox, Flex, Popover, Stack, Text, useClickOutside} from '@sanity/ui'
 import React, {FormEvent, useCallback, useState} from 'react'
-import {usePaneLanguages} from './usePaneLanguages'
+import styled from 'styled-components'
 import {LanguageFilterConfig} from './types'
+import {usePaneLanguages} from './usePaneLanguages'
+
+const StyledBox = styled(Box)`
+  max-height: calc(100vh - 200px);
+`
 
 export interface LanguageFilterMenuButtonProps {
   options: LanguageFilterConfig
@@ -46,7 +51,7 @@ export function LanguageFilterMenuButton(props: LanguageFilterMenuButtonProps) {
   useClickOutside(handleClickOutside, [button, popover])
 
   const content = (
-    <Box overflow="auto" padding={1}>
+    <StyledBox overflow="auto" padding={1}>
       {defaultLanguages.length > 0 && (
         <Card radius={2}>
           <Stack padding={2} space={3}>
@@ -91,7 +96,7 @@ export function LanguageFilterMenuButton(props: LanguageFilterMenuButtonProps) {
           />
         ))}
       </Stack>
-    </Box>
+    </StyledBox>
   )
 
   const langCount = options.supportedLanguages.length
