@@ -6,6 +6,7 @@ import {LanguageFilterConfig} from './types'
 import {isLanguageFilterEnabled} from './filterField'
 import {LanguageFilterProvider} from './LanguageFilterContext'
 import {createSelectedLanguageIdsBus} from './languageSubscription'
+import {LanguageFilterStudioProvider} from './LanguageFilterStudioContext'
 
 /**
  * ## Usage in sanity.config.ts (or .js)
@@ -49,6 +50,12 @@ export const languageFilter = definePlugin<LanguageFilterConfig>((options) => {
 
   return {
     name: '@sanity/language-filter',
+    studio: {
+      components: {
+        layout: (props) => LanguageFilterStudioProvider({...props, options}),
+      },
+    },
+
     document: {
       unstable_languageFilter: (prev, {schemaType, schema}) => {
         if (isLanguageFilterEnabled(schema.get(schemaType), options)) {

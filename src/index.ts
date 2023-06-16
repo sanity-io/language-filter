@@ -12,3 +12,6 @@ export type {
   FilterFieldFunction,
   Language,
 } from './types'
+
+export {useLanguageFilterContext} from './LanguageFilterContext'
+export {useLanguageFilterStudioContext} from './LanguageFilterStudioContext'

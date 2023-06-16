@@ -21,6 +21,10 @@ export function LanguageFilterProvider({
   return <LanguageFilterContext.Provider value={value}>{children}</LanguageFilterContext.Provider>
 }
 
+/**
+ * Retrieves plugin options and if the plugin is enabled
+ * for the current document type inside a document pane
+ */
 export function useLanguageFilterContext() {
   return useContext(LanguageFilterContext)
 }

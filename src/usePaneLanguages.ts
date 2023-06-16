@@ -1,10 +1,11 @@
-import {useCallback, useMemo} from 'react'
+import {useCallback, useEffect, useMemo} from 'react'
 import {LanguageFilterConfig} from './types'
 import {
   getSelectableLanguages,
   persistLanguageIds,
   useSelectedLanguageIds,
 } from './useSelectedLanguageIds'
+import {useLanguageFilterStudioContext} from './LanguageFilterStudioContext'
 
 export interface UsePaneLanguagesParams {
   options: LanguageFilterConfig
@@ -29,6 +30,13 @@ export function usePaneLanguages(props: UsePaneLanguagesParams): {
   const [selectedIds, setSelectedIds] = useSelectedLanguageIds(options)
 
   const selectableLanguages = useMemo(() => getSelectableLanguages(options), [options])
+
+  const studioContext = useLanguageFilterStudioContext()
+  useEffect(() => {
+    if (studioContext) {
+      studioContext.setSelectedLanguageIds(selectedIds)
+    }
+  }, [selectedIds, studioContext])
 
   const updateSelectedIds = useCallback(
     (ids: string[]) => {
