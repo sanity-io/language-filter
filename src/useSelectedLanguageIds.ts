@@ -36,5 +36,5 @@ export function getSelectableLanguages({
 export function useSelectedLanguageIds(
   options: LanguageFilterConfig
 ): [string[], (ids: string[]) => void] {
-  return useState(() => getPersistedLanguageIds(options))
+  return useState(() => [...(options.defaultLanguages ?? []), ...getPersistedLanguageIds(options)])
 }

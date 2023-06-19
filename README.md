@@ -7,7 +7,7 @@
 
 A Sanity plugin that supports filtering localized fields by language
 
-![Language Filter UI](https://user-images.githubusercontent.com/9684022/150549913-68f1b7c7-3305-48b4-b72b-41b95e82450c.gif)
+![Language Filter UI](https://github.com/sanity-io/language-filter/assets/9684022/1a1f77cf-8234-4cf4-918d-da48c1b879b8)
 
 ## What this plugin solves
 
@@ -31,7 +31,6 @@ This plugin adds features to the Studio to improve handling **field-level transl
 
 For **document-level translations** you should use the [@sanity/document-internationalization plugin](https://www.npmjs.com/package/@sanity/document-internationalization).
 
-
 ## Installation
 
 ```
@@ -45,6 +44,7 @@ yarn add @sanity/language-filter
 ```
 
 ## Usage
+
 Add it as a plugin in sanity.config.ts (or .js), and configure it:
 
 ```
@@ -76,16 +76,18 @@ Add it as a plugin in sanity.config.ts (or .js), and configure it:
 ```
 
 Config properties:
+
 - `supportedLanguages` is an array of languages with `id` and `title`. If your localized fields are defined using our recommended way described here (https://www.sanity.io/docs/localization), you probably want to share this list of supported languages between this config and your schema.
 - `defaultLanguages` (optional) is an array of strings where each entry must match an `id` from the `supportedLanguages` array. These languages will be listed by default and will not be possible to unselect. If no `defaultLanguages` is configured, all localized fields will be selected by default.
 - `documentTypes` (optional) is an array of strings where each entry must match a `name` from your document schemas. If defined, this property will be used to conditionally show the language filter on specific document schema types. If undefined, the language filter will show on all document schema types.
 - `filterField` (optional) is a function that must return true if the field should be displayed. It is passed the enclosing type (e.g the object type containing the localized fields, the field, and an array of the currently selected language ids.
-This function is called for all fields and in objects for documents that have language filter enabled. 
-_Default:_ `!enclosingType.name.startsWith('locale') || selectedLanguageIds.includes(field.name)`
+  This function is called for all fields and in objects for documents that have language filter enabled.
+  _Default:_ `!enclosingType.name.startsWith('locale') || selectedLanguageIds.includes(field.name)`
 
 ## Changes in V3
 
 ### documentTypes
+
 Language filter can now be enabled/disabled directly from a schema, using `options.languageFilter: boolean`.
 When `documentTypes` is omitted from plugin config, use `options.languageFilter: false` in a document-definition to hide the filter button.
 When `documentTypes` is provided in plugin config, use `options.languageFilter: true` in a document-definition to show the filter button.
@@ -99,12 +101,13 @@ export const myDocumentSchema = {
   /** ... */
   options: {
     // show language filter for this document type, regardless of how documentTypes for the plugin is configured
-    languageFilter: true
-  }
+    languageFilter: true,
+  },
 }
 ```
 
 ### State management
+
 Selected languages are now stored as `langs` url-param state; this allows users to copy paste
 a url in the studio with the currently selected languages preselected.
 

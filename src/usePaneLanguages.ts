@@ -3,6 +3,8 @@ import {useCallback, useMemo} from 'react'
 import {getSelectableLanguages, persistLanguageIds} from './useSelectedLanguageIds'
 import {useLanguageFilterStudioContext} from './LanguageFilterStudioContext'
 
+const unique = (arr: string[]) => Array.from(new Set(arr))
+
 export function usePaneLanguages(): {
   activeLanguages: string[]
   allSelected: boolean
@@ -11,16 +13,16 @@ export function usePaneLanguages(): {
   toggleLanguage: (languageId: string) => void
 } {
   const {selectedLanguageIds, setSelectedLanguageIds, options} = useLanguageFilterStudioContext()
-  const {defaultLanguages} = options
+  const {defaultLanguages = []} = options
 
   const selectableLanguages = useMemo(() => getSelectableLanguages(options), [options])
 
   const updateSelectedIds = useCallback(
     (ids: string[]) => {
-      setSelectedLanguageIds(ids)
-      persistLanguageIds(ids)
+      setSelectedLanguageIds(unique([...defaultLanguages, ...ids]))
+      persistLanguageIds(unique([...defaultLanguages, ...ids]))
     },
-    [setSelectedLanguageIds]
+    [defaultLanguages, setSelectedLanguageIds]
   )
 
   const selectAll = useCallback(
@@ -29,8 +31,8 @@ export function usePaneLanguages(): {
   )
 
   const selectNone = useCallback(() => {
-    updateSelectedIds([])
-  }, [updateSelectedIds])
+    updateSelectedIds(defaultLanguages)
+  }, [defaultLanguages, updateSelectedIds])
 
   const toggleLanguage = useCallback(
     (languageId: string) => {
@@ -39,7 +41,7 @@ export function usePaneLanguages(): {
       if (lang.includes(languageId)) {
         lang = lang.filter((l) => l !== languageId)
       } else {
-        lang = [...lang, languageId]
+        lang = unique([...lang, languageId])
       }
 
       updateSelectedIds(lang)
@@ -48,13 +50,14 @@ export function usePaneLanguages(): {
   )
 
   const activeLanguages = useMemo(
-    () => [...(defaultLanguages ?? []), ...selectedLanguageIds],
+    () => unique([...(defaultLanguages ?? []), ...selectedLanguageIds]),
     [defaultLanguages, selectedLanguageIds]
   )
 
   return {
     activeLanguages,
-    allSelected: selectedLanguageIds.length === selectableLanguages.length,
+    allSelected:
+      selectedLanguageIds.length === selectableLanguages.length + defaultLanguages.length,
     selectAll,
     selectNone,
     toggleLanguage,
