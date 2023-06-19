@@ -7,7 +7,7 @@
 
 A Sanity plugin that supports filtering localized fields by language
 
-![Language Filter UI](https://github.com/sanity-io/language-filter/assets/9684022/1a1f77cf-8234-4cf4-918d-da48c1b879b8)
+![Language Filter UI](https://github.com/sanity-io/language-filter/assets/9684022/a48fe4b7-975b-424d-9740-386f09ed9cd8)
 
 ## What this plugin solves
 
