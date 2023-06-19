@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.1](https://github.com/sanity-io/language-filter/compare/v3.1.0...v3.1.1) (2023-06-19)
+
+### Bug Fixes
+
+- issue with defaultLanguages ([#44](https://github.com/sanity-io/language-filter/issues/44)) ([4e038d7](https://github.com/sanity-io/language-filter/commit/4e038d7f0615cb7454ca4d1a80530bc1e7b3382f))
+
 ## [3.1.0](https://github.com/sanity-io/language-filter/compare/v3.0.1...v3.1.0) (2023-06-19)
 
 ### Features
