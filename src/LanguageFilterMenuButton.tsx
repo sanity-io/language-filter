@@ -41,7 +41,7 @@ export function LanguageFilterMenuButton(props: LanguageFilterMenuButtonProps) {
   const languageOptions = options.supportedLanguages.filter(
     (l) => !options.defaultLanguages?.includes(l.id)
   )
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(!false)
   const {activeLanguages, allSelected, selectAll, selectNone, toggleLanguage} = usePaneLanguages()
   const [button, setButton] = useState<HTMLElement | null>(null)
   const [popover, setPopover] = useState<HTMLElement | null>(null)
