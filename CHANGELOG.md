@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.0](https://github.com/sanity-io/language-filter/compare/v3.0.1...v3.1.0) (2023-06-19)
+
+### Features
+
+- new studio-wide context and exported hooks ([#43](https://github.com/sanity-io/language-filter/issues/43)) ([cc99912](https://github.com/sanity-io/language-filter/commit/cc999120507d3de7e54385166afce26008210066))
+
 ## [3.0.1](https://github.com/sanity-io/language-filter/compare/v3.0.0...v3.0.1) (2023-03-08)
 
 ### Bug Fixes
