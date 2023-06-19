@@ -1,68 +1,30 @@
-import React, {useEffect, useMemo} from 'react'
-import {ObjectInputProps, ObjectMember} from 'sanity'
-import {LanguageFilterConfig} from './types'
-import {defaultFilterField} from './filterField'
-import {useLanguageFilterContext} from './LanguageFilterContext'
-import {useSelectedLanguageIds} from './useSelectedLanguageIds'
+import React, {useMemo} from 'react'
+import {ObjectInputProps, ObjectMember, useFormValue} from 'sanity'
+import {useLanguageFilterStudioContext} from './LanguageFilterStudioContext'
 
-export type LanguageFilterObjectInputProps = {
-  options: LanguageFilterConfig
-  /**
-   * We need a way to communicate state changes between the pane menu and input components.
-   * LanguageFilter button lives outside the input-render tree, so Context is out.
-   * This is a workaround for that.
-   */
-  subscribeSelectedIds: (callback: (ids: string[]) => void) => () => void
-} & ObjectInputProps
+// First check that this Object is in a schema type for which language-filter is enabled
+export function FilteredObjectWrapper(props: ObjectInputProps) {
+  const {options} = useLanguageFilterStudioContext()
 
-export function LanguageFilterObjectInput(
-  props: ObjectInputProps & {
-    subscribeSelectedIds: (callback: (ids: string[]) => void) => () => void
-  }
-) {
-  const context = useLanguageFilterContext()
-  const {options, enabled} = context || {}
-  const {subscribeSelectedIds, ...restProps} = props
-  if (!enabled || !options) {
-    return props.renderDefault(restProps)
-  }
-  return (
-    <FilteredObjectInput
-      {...restProps}
-      options={options}
-      subscribeSelectedIds={subscribeSelectedIds}
-    />
-  )
+  const documentType = useFormValue(['_type'])
+  const {documentTypes} = options
+  const languageFilterEnabled =
+    typeof documentType === 'string' && documentTypes.includes(documentType)
+
+  return languageFilterEnabled ? <FilteredObjectInput {...props} /> : props.renderDefault(props)
 }
 
-function FilteredObjectInput(props: LanguageFilterObjectInputProps) {
-  const {
-    members: membersProp,
-    options,
-    schemaType,
-    renderDefault,
-    subscribeSelectedIds,
-    ...restProps
-  } = props
-  const [selectedIds, setSelectedIds] = useSelectedLanguageIds(options)
-
-  useEffect(() => {
-    const unsubscribe = subscribeSelectedIds(setSelectedIds)
-    return () => unsubscribe()
-  }, [subscribeSelectedIds, setSelectedIds])
-
-  const activeLanguages = useMemo(
-    () => [...(options.defaultLanguages ?? []), ...selectedIds],
-    [options.defaultLanguages, selectedIds]
-  )
-
-  const filterField = options.filterField ?? defaultFilterField
+// Modify the object members based on selected languages in the filter
+export function FilteredObjectInput(props: ObjectInputProps) {
+  const {members: membersProp, schemaType, renderDefault, ...restProps} = props
+  const {selectedLanguageIds, options} = useLanguageFilterStudioContext()
+  const {filterField} = options
 
   const members: ObjectMember[] = useMemo(() => {
     return membersProp
       .filter((member) => {
         return (
-          (member.kind === 'field' && filterField(schemaType, member, activeLanguages)) ||
+          (member.kind === 'field' && filterField(schemaType, member, selectedLanguageIds)) ||
           member.kind === 'fieldSet'
         )
       })
@@ -75,7 +37,7 @@ function FilteredObjectInput(props: LanguageFilterObjectInputProps) {
               members: member.fieldSet.members.filter((fieldsetMember) => {
                 return (
                   fieldsetMember.kind === 'field' &&
-                  filterField(schemaType, fieldsetMember, activeLanguages)
+                  filterField(schemaType, fieldsetMember, selectedLanguageIds)
                 )
               }),
             },
@@ -83,7 +45,7 @@ function FilteredObjectInput(props: LanguageFilterObjectInputProps) {
         }
         return member
       })
-  }, [schemaType, membersProp, filterField, activeLanguages])
+  }, [schemaType, membersProp, filterField, selectedLanguageIds])
 
   return renderDefault({...restProps, members, schemaType, renderDefault})
 }
