@@ -41,7 +41,7 @@ export function LanguageFilterMenuButton(props: LanguageFilterMenuButtonProps) {
   const languageOptions = options.supportedLanguages.filter(
     (l) => !options.defaultLanguages?.includes(l.id)
   )
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(!false)
   const {activeLanguages, allSelected, selectAll, selectNone, toggleLanguage} = usePaneLanguages()
   const [button, setButton] = useState<HTMLElement | null>(null)
   const [popover, setPopover] = useState<HTMLElement | null>(null)
@@ -78,24 +78,17 @@ export function LanguageFilterMenuButton(props: LanguageFilterMenuButtonProps) {
   }, [])
 
   const content = (
-    <StyledBox overflow="auto" padding={1}>
-      {defaultLanguages.length > 0 && (
-        <Card radius={2}>
-          <Stack padding={2} space={3}>
-            <Box paddingBottom={2}>
-              <Text size={1} weight="semibold">
-                Default language{defaultLanguages.length > 1 && <>s</>}
-              </Text>
-            </Box>
-
-            {defaultLanguages.map((l) => (
-              <Text key={l.id}>{l.title}</Text>
-            ))}
-          </Stack>
-        </Card>
-      )}
-
+    <StyledBox overflow="auto">
       <Stack padding={1} space={1}>
+        {defaultLanguages.length > 0 && (
+          <>
+            {defaultLanguages.map((l) => (
+              <LanguageFilterOption key={l.id} id={l.id} title={l.title} selected />
+            ))}
+            <Card borderTop />
+          </>
+        )}
+
         <Button
           mode="bleed"
           onClick={handleToggleAll}
@@ -114,7 +107,7 @@ export function LanguageFilterMenuButton(props: LanguageFilterMenuButtonProps) {
               )}
             </Text>
             <Box flex={1}>
-              <Text>{allSelected ? `Hide All` : `Show All`}</Text>
+              <Text>{allSelected ? `Hide all` : `Show all`}</Text>
             </Box>
           </Flex>
         </Button>
@@ -165,22 +158,27 @@ export function LanguageFilterMenuButton(props: LanguageFilterMenuButtonProps) {
 
 function LanguageFilterOption(props: {
   id: string
-  onToggle: (id: string) => void
   selected: boolean
   title: string
+  // eslint-disable-next-line react/require-default-props
+  onToggle?: (id: string) => void
 }) {
   const {id, onToggle, selected, title} = props
 
   const handleChange = useCallback(() => {
-    onToggle(id)
+    if (onToggle) {
+      onToggle(id)
+    }
   }, [id, onToggle])
 
+  const disabled = !onToggle
+
   return (
-    <Button mode="bleed" onClick={handleChange} justify="flex-start">
+    <Button mode="bleed" onClick={handleChange} justify="flex-start" disabled={disabled}>
       <Flex gap={3} align="center">
         <Text size={2}>
           {selected ? (
-            <TextWithTone tone="positive">
+            <TextWithTone tone={disabled ? 'default' : 'positive'}>
               <CheckmarkCircleIcon />
             </TextWithTone>
           ) : (
