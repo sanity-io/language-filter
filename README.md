@@ -68,8 +68,8 @@ Add it as a plugin in sanity.config.ts (or .js), and configure it:
             defaultLanguages: ['nb'],
             // Only show language filter for document type `page` (schemaType.name)
             documentTypes: ['page'],
-            filterField: (enclosingType, field, selectedLanguageIds) =>
-              !enclosingType.name.startsWith('locale') || selectedLanguageIds.includes(field.name),
+            filterField: (enclosingType, member, selectedLanguageIds) =>
+              !enclosingType.name.startsWith('locale') || selectedLanguageIds.includes(member.name),
        })
      ]
  })

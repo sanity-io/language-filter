@@ -1,50 +1,26 @@
-import {useCallback, useEffect, useMemo} from 'react'
-import {LanguageFilterConfig} from './types'
-import {
-  getSelectableLanguages,
-  persistLanguageIds,
-  useSelectedLanguageIds,
-} from './useSelectedLanguageIds'
+import {useCallback, useMemo} from 'react'
+
+import {getSelectableLanguages, persistLanguageIds} from './useSelectedLanguageIds'
 import {useLanguageFilterStudioContext} from './LanguageFilterStudioContext'
 
-export interface UsePaneLanguagesParams {
-  options: LanguageFilterConfig
-  /**
-   * We need a way to communicate state changes between the pane menu and input components.
-   * LanguageFilter button lives outside the input-render tree, so Context is out.
-   * This is a workaround for that.
-   */
-  onSelectedIdsChange: (ids: string[]) => void
-}
-
-export function usePaneLanguages(props: UsePaneLanguagesParams): {
+export function usePaneLanguages(): {
   activeLanguages: string[]
   allSelected: boolean
   selectAll: () => void
   selectNone: () => void
   toggleLanguage: (languageId: string) => void
 } {
-  const {options, onSelectedIdsChange} = props
+  const {selectedLanguageIds, setSelectedLanguageIds, options} = useLanguageFilterStudioContext()
   const {defaultLanguages} = options
-
-  const [selectedIds, setSelectedIds] = useSelectedLanguageIds(options)
 
   const selectableLanguages = useMemo(() => getSelectableLanguages(options), [options])
 
-  const studioContext = useLanguageFilterStudioContext()
-  useEffect(() => {
-    if (studioContext) {
-      studioContext.setSelectedLanguageIds(selectedIds)
-    }
-  }, [selectedIds, studioContext])
-
   const updateSelectedIds = useCallback(
     (ids: string[]) => {
-      setSelectedIds(ids)
+      setSelectedLanguageIds(ids)
       persistLanguageIds(ids)
-      onSelectedIdsChange(ids)
     },
-    [onSelectedIdsChange, setSelectedIds]
+    [setSelectedLanguageIds]
   )
 
   const selectAll = useCallback(
@@ -58,7 +34,7 @@ export function usePaneLanguages(props: UsePaneLanguagesParams): {
 
   const toggleLanguage = useCallback(
     (languageId: string) => {
-      let lang = selectedIds
+      let lang = selectedLanguageIds
 
       if (lang.includes(languageId)) {
         lang = lang.filter((l) => l !== languageId)
@@ -68,17 +44,17 @@ export function usePaneLanguages(props: UsePaneLanguagesParams): {
 
       updateSelectedIds(lang)
     },
-    [updateSelectedIds, selectedIds]
+    [updateSelectedIds, selectedLanguageIds]
   )
 
   const activeLanguages = useMemo(
-    () => [...(defaultLanguages ?? []), ...selectedIds],
-    [defaultLanguages, selectedIds]
+    () => [...(defaultLanguages ?? []), ...selectedLanguageIds],
+    [defaultLanguages, selectedLanguageIds]
   )
 
   return {
     activeLanguages,
-    allSelected: selectedIds.length === selectableLanguages.length,
+    allSelected: selectedLanguageIds.length === selectableLanguages.length,
     selectAll,
     selectNone,
     toggleLanguage,

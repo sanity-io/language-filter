@@ -13,5 +13,4 @@ export type {
   Language,
 } from './types'
 
-export {useLanguageFilterContext} from './LanguageFilterContext'
 export {useLanguageFilterStudioContext} from './LanguageFilterStudioContext'

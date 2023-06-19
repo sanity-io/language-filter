@@ -1,8 +1,27 @@
-import {Box, Button, Card, Checkbox, Flex, Popover, Stack, Text, useClickOutside} from '@sanity/ui'
-import React, {FormEvent, useCallback, useState} from 'react'
+import {
+  TextInput,
+  Badge,
+  Box,
+  Button,
+  Card,
+  Flex,
+  Popover,
+  Stack,
+  Text,
+  useClickOutside,
+} from '@sanity/ui'
+import React, {FormEvent, MouseEventHandler, useCallback, useState} from 'react'
 import styled from 'styled-components'
 import {LanguageFilterConfig} from './types'
 import {usePaneLanguages} from './usePaneLanguages'
+import {
+  CheckmarkCircleIcon,
+  CircleIcon,
+  EyeClosedIcon,
+  EyeOpenIcon,
+  TranslateIcon,
+} from '@sanity/icons'
+import {TextWithTone} from 'sanity'
 
 const StyledBox = styled(Box)`
   max-height: calc(100vh - 200px);
@@ -10,11 +29,10 @@ const StyledBox = styled(Box)`
 
 export interface LanguageFilterMenuButtonProps {
   options: LanguageFilterConfig
-  onSelectedIdsChange: (ids: string[]) => void
 }
 
 export function LanguageFilterMenuButton(props: LanguageFilterMenuButtonProps) {
-  const {options, onSelectedIdsChange} = props
+  const {options} = props
 
   const defaultLanguages = options.supportedLanguages.filter((l) =>
     options.defaultLanguages?.includes(l.id)
@@ -24,16 +42,13 @@ export function LanguageFilterMenuButton(props: LanguageFilterMenuButtonProps) {
     (l) => !options.defaultLanguages?.includes(l.id)
   )
   const [open, setOpen] = useState(false)
-  const {activeLanguages, allSelected, selectAll, selectNone, toggleLanguage} = usePaneLanguages({
-    options,
-    onSelectedIdsChange,
-  })
+  const {activeLanguages, allSelected, selectAll, selectNone, toggleLanguage} = usePaneLanguages()
   const [button, setButton] = useState<HTMLElement | null>(null)
   const [popover, setPopover] = useState<HTMLElement | null>(null)
 
-  const handleToggleAll = useCallback(
-    (event: FormEvent<HTMLInputElement>) => {
-      const checked = event.currentTarget.checked
+  const handleToggleAll: MouseEventHandler<HTMLButtonElement> = useCallback(
+    (event) => {
+      const checked = event.currentTarget.value === 'ALL'
 
       if (checked) {
         selectAll()
@@ -49,6 +64,18 @@ export function LanguageFilterMenuButton(props: LanguageFilterMenuButtonProps) {
   const handleClickOutside = useCallback(() => setOpen(false), [])
 
   useClickOutside(handleClickOutside, [button, popover])
+
+  const langCount = options.supportedLanguages.length
+
+  // Search filter query
+  const [query, setQuery] = useState(``)
+  const handleQuery = useCallback((event: FormEvent<HTMLInputElement>) => {
+    if (event.currentTarget.value) {
+      setQuery(event.currentTarget.value)
+    } else {
+      setQuery(``)
+    }
+  }, [])
 
   const content = (
     <StyledBox overflow="auto" padding={1}>
@@ -68,56 +95,65 @@ export function LanguageFilterMenuButton(props: LanguageFilterMenuButtonProps) {
         </Card>
       )}
 
-      <Stack marginTop={3} padding={2} space={2}>
-        <Box paddingBottom={2}>
-          <Text size={1} weight="semibold">
-            Show translations
-          </Text>
-        </Box>
-
-        <Card as="label">
-          <Flex align="center" gap={2}>
-            <Checkbox checked={allSelected} name="_allSelected" onChange={handleToggleAll} />
+      <Stack padding={1} space={1}>
+        <Button
+          mode="bleed"
+          onClick={handleToggleAll}
+          justify="flex-start"
+          value={allSelected ? 'NONE' : 'ALL'}
+          disabled={!!query}
+        >
+          <Flex gap={3} align="center">
+            <Text size={2}>
+              {allSelected ? (
+                <TextWithTone tone="primary">
+                  <EyeClosedIcon />
+                </TextWithTone>
+              ) : (
+                <EyeOpenIcon />
+              )}
+            </Text>
             <Box flex={1}>
-              <Text muted={!allSelected} weight="semibold">
-                All translations
-              </Text>
+              <Text>{allSelected ? `Hide All` : `Show All`}</Text>
             </Box>
           </Flex>
-        </Card>
+        </Button>
 
-        {languageOptions.map((lang) => (
-          <LanguageFilterOption
-            id={lang.id}
-            key={lang.id}
-            onToggle={toggleLanguage}
-            selected={activeLanguages.includes(lang.id)}
-            title={lang.title}
-          />
-        ))}
+        <Card borderTop />
+
+        {langCount > 4 ? (
+          <TextInput onChange={handleQuery} value={query} placeholder="Filter languages" />
+        ) : null}
+
+        {languageOptions
+          .filter((language) => {
+            if (query) {
+              return language.title.toLowerCase().includes(query.toLowerCase())
+            }
+            return true
+          })
+          .map((lang) => (
+            <LanguageFilterOption
+              id={lang.id}
+              key={lang.id}
+              onToggle={toggleLanguage}
+              selected={activeLanguages.includes(lang.id)}
+              title={lang.title}
+            />
+          ))}
       </Stack>
     </StyledBox>
   )
 
-  const langCount = options.supportedLanguages.length
+  const buttonText =
+    activeLanguages.length === langCount
+      ? `Showing all`
+      : `Showing ${activeLanguages.length} / ${langCount}`
   return (
     <Popover content={content} open={open} portal ref={setPopover}>
       <Button
-        text={
-          <Flex gap={1}>
-            <Box>Filter languages:</Box>
-            <Flex gap={1} justify="space-around">
-              <Flex
-                style={{width: `${Math.floor(Math.log10(langCount) + 1)}ch`}}
-                justify="flex-end"
-              >
-                {activeLanguages.length}
-              </Flex>
-              <Box>/</Box>
-              <Box>{langCount}</Box>
-            </Flex>
-          </Flex>
-        }
+        text={buttonText}
+        icon={TranslateIcon}
         mode="bleed"
         onClick={handleClick}
         ref={setButton}
@@ -140,13 +176,22 @@ function LanguageFilterOption(props: {
   }, [id, onToggle])
 
   return (
-    <Card as="label">
-      <Flex align="center" gap={2}>
-        <Checkbox checked={selected} name={`language-${id}`} onChange={handleChange} />
+    <Button mode="bleed" onClick={handleChange} justify="flex-start">
+      <Flex gap={3} align="center">
+        <Text size={2}>
+          {selected ? (
+            <TextWithTone tone="positive">
+              <CheckmarkCircleIcon />
+            </TextWithTone>
+          ) : (
+            <CircleIcon />
+          )}
+        </Text>
         <Box flex={1}>
-          <Text muted={!selected}>{title}</Text>
+          <Text>{title}</Text>
         </Box>
+        <Badge>{id}</Badge>
       </Flex>
-    </Card>
+    </Button>
   )
 }
