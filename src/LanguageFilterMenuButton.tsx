@@ -12,7 +12,6 @@ import {
 } from '@sanity/ui'
 import React, {FormEvent, MouseEventHandler, useCallback, useState} from 'react'
 import styled from 'styled-components'
-import {LanguageFilterConfig} from './types'
 import {usePaneLanguages} from './usePaneLanguages'
 import {
   CheckmarkCircleIcon,
@@ -22,17 +21,14 @@ import {
   TranslateIcon,
 } from '@sanity/icons'
 import {TextWithTone} from 'sanity'
+import {useLanguageFilterStudioContext} from './LanguageFilterStudioContext'
 
 const StyledBox = styled(Box)`
   max-height: calc(100vh - 200px);
 `
 
-export interface LanguageFilterMenuButtonProps {
-  options: LanguageFilterConfig
-}
-
-export function LanguageFilterMenuButton(props: LanguageFilterMenuButtonProps) {
-  const {options} = props
+export function LanguageFilterMenuButton() {
+  const {options} = useLanguageFilterStudioContext()
 
   const defaultLanguages = options.supportedLanguages.filter((l) =>
     options.defaultLanguages?.includes(l.id)
@@ -41,7 +37,7 @@ export function LanguageFilterMenuButton(props: LanguageFilterMenuButtonProps) {
   const languageOptions = options.supportedLanguages.filter(
     (l) => !options.defaultLanguages?.includes(l.id)
   )
-  const [open, setOpen] = useState(!false)
+  const [open, setOpen] = useState(false)
   const {activeLanguages, allSelected, selectAll, selectNone, toggleLanguage} = usePaneLanguages()
   const [button, setButton] = useState<HTMLElement | null>(null)
   const [popover, setPopover] = useState<HTMLElement | null>(null)
@@ -76,6 +72,8 @@ export function LanguageFilterMenuButton(props: LanguageFilterMenuButtonProps) {
       setQuery(``)
     }
   }, [])
+
+  const showSearch = langCount > 4
 
   const content = (
     <StyledBox overflow="auto">
@@ -112,11 +110,11 @@ export function LanguageFilterMenuButton(props: LanguageFilterMenuButtonProps) {
           </Flex>
         </Button>
 
-        <Card borderTop />
-
-        {langCount > 4 ? (
+        {showSearch ? (
           <TextInput onChange={handleQuery} value={query} placeholder="Filter languages" />
-        ) : null}
+        ) : (
+          <Card borderTop />
+        )}
 
         {languageOptions
           .filter((language) => {

@@ -1,6 +1,11 @@
-import React, {createContext, useContext, useMemo} from 'react'
-import {LanguageFilterConfig} from './types'
-import {LayoutProps} from 'sanity'
+import React, {createContext, useContext, useEffect, useMemo, useState} from 'react'
+import {
+  Language,
+  LanguageCallback,
+  LanguageFilterConfig,
+  LanguageFilterConfigProcessed,
+} from './types'
+import {LayoutProps, useClient} from 'sanity'
 import {defaultFilterField} from './filterField'
 import {useSelectedLanguageIds} from './useSelectedLanguageIds'
 
@@ -9,13 +14,18 @@ export interface LanguageFilterStudioContextProps {
   options: Required<LanguageFilterConfig>
 }
 
-export interface LanguageFilterStudioContextValue extends LanguageFilterStudioContextProps {
+export interface LanguageFilterStudioContextProcessed {
+  options: Required<LanguageFilterConfigProcessed>
+}
+
+export interface LanguageFilterStudioContextValue extends LanguageFilterStudioContextProcessed {
   selectedLanguageIds: string[]
   setSelectedLanguageIds: (ids: string[]) => void
 }
 
 export const defaultContextValue: LanguageFilterStudioContextValue = {
   options: {
+    apiVersion: '2022-11-27',
     supportedLanguages: [],
     defaultLanguages: [],
     documentTypes: [],
@@ -36,13 +46,37 @@ const LanguageFilterStudioContext =
 export function LanguageFilterStudioProvider(
   props: LayoutProps & LanguageFilterStudioContextProps
 ) {
-  const options = useMemo(
-    () => ({
+  const client = useClient({apiVersion: '2023-01-01'})
+
+  // const deferredDocument = useDeferredValue(document)
+  // const selectedValue = useMemo(
+  //   () => getSelectedValue(internationalizedArray.select, deferredDocument),
+  //   [internationalizedArray.select, deferredDocument]
+  // )
+  const [languages, setLanguages] = useState<Language[]>(
+    Array.isArray(props.options.supportedLanguages) ? props.options.supportedLanguages : []
+  )
+  useEffect(() => {
+    let asyncLanguages: Language[] = []
+
+    async function getLanguages(supportedLanguagesCallback: LanguageCallback) {
+      asyncLanguages = await supportedLanguagesCallback(client, {})
+      setLanguages(asyncLanguages)
+    }
+
+    if (!Array.isArray(props.options.supportedLanguages)) {
+      getLanguages(props.options.supportedLanguages)
+    }
+  }, [client, props.options.supportedLanguages])
+
+  const options = useMemo<Required<LanguageFilterConfigProcessed>>(() => {
+    return {
       ...defaultContextValue.options,
       ...props.options,
-    }),
-    [props.options]
-  )
+      supportedLanguages: languages,
+    }
+  }, [props.options, languages])
+
   const [selectedLanguageIds, setSelectedLanguageIds] = useSelectedLanguageIds(options)
 
   return (

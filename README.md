@@ -47,7 +47,7 @@ yarn add @sanity/language-filter
 
 Add it as a plugin in sanity.config.ts (or .js), and configure it:
 
-```
+```ts
  import {defineConfig} from 'sanity'
  import {languageFilter} from '@sanity/language-filter'
 
@@ -77,12 +77,46 @@ Add it as a plugin in sanity.config.ts (or .js), and configure it:
 
 Config properties:
 
-- `supportedLanguages` is an array of languages with `id` and `title`. If your localized fields are defined using our recommended way described here (https://www.sanity.io/docs/localization), you probably want to share this list of supported languages between this config and your schema.
+- `supportedLanguages` can be either:
+  -- An static array of language objects with `id` and `title`. If your localized fields are defined using our recommended way described here (https://www.sanity.io/docs/localization), you probably want to share this list of supported languages between this config and your schema.
+  -- A function that returns a promise resolving to an array of language objects with `id` and `title`. This is useful if you want to fetch the list of supported languages from an external source. See [Loading languages](#loading-languages) for more details.
 - `defaultLanguages` (optional) is an array of strings where each entry must match an `id` from the `supportedLanguages` array. These languages will be listed by default and will not be possible to unselect. If no `defaultLanguages` is configured, all localized fields will be selected by default.
 - `documentTypes` (optional) is an array of strings where each entry must match a `name` from your document schemas. If defined, this property will be used to conditionally show the language filter on specific document schema types. If undefined, the language filter will show on all document schema types.
 - `filterField` (optional) is a function that must return true if the field should be displayed. It is passed the enclosing type (e.g the object type containing the localized fields, the field, and an array of the currently selected language ids.
   This function is called for all fields and in objects for documents that have language filter enabled.
   _Default:_ `!enclosingType.name.startsWith('locale') || selectedLanguageIds.includes(field.name)`
+- `apiVersion` (optional) used for the Sanity Client when asynchronously loading languages.
+
+## Loading languages
+
+Languages must be an array of objects with an `id` and `title`.
+
+```ts
+languages: [
+  {id: 'en', title: 'English'},
+  {id: 'fr', title: 'French'}
+],
+```
+
+Or an asynchronous function that returns an array of objects with an `id` and `title`.
+
+```ts
+languages: async () => {
+  const response = await fetch('https://example.com/languages')
+  return response.json()
+}
+```
+
+The async function contains a configured Sanity Client in the first parameter, allowing you to store Language options as documents. Your query should return an array of objects with an `id` and `title`.
+
+```ts
+languages: async (client) => {
+  const response = await client.fetch(`*[_type == "language"]{ id, title }`)
+  return response
+},
+```
+
+`@sanity/language-filter`'s asynchronous language loading does not currently support modifying the query based on a value in the current document.
 
 ## Changes in V3
 
@@ -105,13 +139,6 @@ export const myDocumentSchema = {
   },
 }
 ```
-
-### State management
-
-Selected languages are now stored as `langs` url-param state; this allows users to copy paste
-a url in the studio with the currently selected languages preselected.
-
-Previously this state was stored in localstorage.
 
 ## License
 
