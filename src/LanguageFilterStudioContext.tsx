@@ -47,12 +47,6 @@ export function LanguageFilterStudioProvider(
   props: LayoutProps & LanguageFilterStudioContextProps
 ) {
   const client = useClient({apiVersion: '2023-01-01'})
-
-  // const deferredDocument = useDeferredValue(document)
-  // const selectedValue = useMemo(
-  //   () => getSelectedValue(internationalizedArray.select, deferredDocument),
-  //   [internationalizedArray.select, deferredDocument]
-  // )
   const [languages, setLanguages] = useState<Language[]>(
     Array.isArray(props.options.supportedLanguages) ? props.options.supportedLanguages : []
   )
