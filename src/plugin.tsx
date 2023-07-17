@@ -46,7 +46,7 @@ import {defaultContextValue, LanguageFilterStudioProvider} from './LanguageFilte
  */
 export const languageFilter = definePlugin<LanguageFilterConfig>((options) => {
   const RenderLanguageFilter: DocumentLanguageFilterComponent = () => {
-    return <LanguageFilterMenuButton options={options} />
+    return <LanguageFilterMenuButton />
   }
 
   const pluginOptions = {
