@@ -1,16 +1,15 @@
 import React, {useMemo} from 'react'
-import {ObjectInputProps, ObjectMember, useFormValue} from 'sanity'
+import {ObjectInputProps, ObjectMember, useFormValue, useSchema} from 'sanity'
 import {useLanguageFilterStudioContext} from './LanguageFilterStudioContext'
+import {isLanguageFilterEnabled} from './filterField'
 
 // First check that this Object is in a schema type for which language-filter is enabled
 export function FilteredObjectWrapper(props: ObjectInputProps) {
   const {options} = useLanguageFilterStudioContext()
 
-  const documentType = useFormValue(['_type'])
-  const {documentTypes} = options
-  const languageFilterEnabled =
-    typeof documentType === 'string' && documentTypes.includes(documentType)
-
+  const documentType = useFormValue(['_type']) as string
+  const schema = useSchema()
+  const languageFilterEnabled = isLanguageFilterEnabled(schema.get(documentType), options)
   return languageFilterEnabled ? <FilteredObjectInput {...props} /> : props.renderDefault(props)
 }
 
