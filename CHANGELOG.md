@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.1](https://github.com/sanity-io/language-filter/compare/v3.2.0...v3.2.1) (2023-07-20)
+
+### Bug Fixes
+
+- ensure filterField runs on schema-configured types ([cbd7e6f](https://github.com/sanity-io/language-filter/commit/cbd7e6f35df79aec622449945de871674e1bca0e))
+
 ## [3.2.0](https://github.com/sanity-io/language-filter/compare/v3.1.2...v3.2.0) (2023-07-17)
 
 ### Features
