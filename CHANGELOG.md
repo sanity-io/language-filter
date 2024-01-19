@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.2](https://github.com/sanity-io/language-filter/compare/v3.2.1...v3.2.2) (2024-01-19)
+
+### Bug Fixes
+
+- update dependencies ([#61](https://github.com/sanity-io/language-filter/issues/61)) ([dee0b9f](https://github.com/sanity-io/language-filter/commit/dee0b9f6fe1b93bca75bfef43ce1cbcca7c1a6c4))
+
 ## [3.2.1](https://github.com/sanity-io/language-filter/compare/v3.2.0...v3.2.1) (2023-07-20)
 
 ### Bug Fixes
