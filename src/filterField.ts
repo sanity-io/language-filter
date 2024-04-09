@@ -1,4 +1,5 @@
 import type {SchemaType} from 'sanity'
+
 import type {FilterFieldFunction, LanguageFilterConfig, LanguageFilterSchema} from './types'
 
 export const defaultFilterField: FilterFieldFunction = (

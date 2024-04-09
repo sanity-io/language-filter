@@ -1,5 +1,6 @@
-import type {Language, LanguageFilterConfig} from './types'
 import {useState} from 'react'
+
+import type {Language, LanguageFilterConfig} from './types'
 const storageKey = '@sanity/plugin/language-filter/selected-languages'
 
 export function getPersistedLanguageIds(options: LanguageFilterConfig): string[] {

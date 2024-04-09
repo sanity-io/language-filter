@@ -1,5 +1,6 @@
-import {defaultFilterField, isLanguageFilterEnabled} from './filterField'
 import type {FieldMember, ObjectSchemaType} from 'sanity'
+
+import {defaultFilterField, isLanguageFilterEnabled} from './filterField'
 
 describe('filterField', () => {
   describe('isLanguageFilterEnabled', () => {

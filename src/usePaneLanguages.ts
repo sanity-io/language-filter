@@ -1,7 +1,7 @@
 import {useCallback, useMemo} from 'react'
 
-import {getSelectableLanguages, persistLanguageIds} from './useSelectedLanguageIds'
 import {useLanguageFilterStudioContext} from './LanguageFilterStudioContext'
+import {getSelectableLanguages, persistLanguageIds} from './useSelectedLanguageIds'
 
 const unique = (arr: string[]) => Array.from(new Set(arr))
 
@@ -22,12 +22,12 @@ export function usePaneLanguages(): {
       setSelectedLanguageIds(unique([...defaultLanguages, ...ids]))
       persistLanguageIds(unique([...defaultLanguages, ...ids]))
     },
-    [defaultLanguages, setSelectedLanguageIds]
+    [defaultLanguages, setSelectedLanguageIds],
   )
 
   const selectAll = useCallback(
     () => updateSelectedIds(selectableLanguages.map((l) => l.id)),
-    [updateSelectedIds, selectableLanguages]
+    [updateSelectedIds, selectableLanguages],
   )
 
   const selectNone = useCallback(() => {
@@ -46,12 +46,12 @@ export function usePaneLanguages(): {
 
       updateSelectedIds(lang)
     },
-    [updateSelectedIds, selectedLanguageIds]
+    [updateSelectedIds, selectedLanguageIds],
   )
 
   const activeLanguages = useMemo(
     () => unique([...(defaultLanguages ?? []), ...selectedLanguageIds]),
-    [defaultLanguages, selectedLanguageIds]
+    [defaultLanguages, selectedLanguageIds],
   )
 
   return {

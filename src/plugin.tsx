@@ -4,11 +4,12 @@ import {
   isObjectSchemaType,
   type ObjectInputProps,
 } from 'sanity'
-import {FilteredObjectWrapper} from './LanguageFilterObjectInput'
-import {LanguageFilterMenuButton} from './LanguageFilterMenuButton'
-import type {LanguageFilterConfig} from './types'
+
 import {isLanguageFilterEnabled} from './filterField'
+import {LanguageFilterMenuButton} from './LanguageFilterMenuButton'
+import {FilteredObjectWrapper} from './LanguageFilterObjectInput'
 import {defaultContextValue, LanguageFilterStudioProvider} from './LanguageFilterStudioContext'
+import type {LanguageFilterConfig} from './types'
 
 /**
  * ## Usage in sanity.config.ts (or .js)
