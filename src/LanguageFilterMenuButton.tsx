@@ -142,7 +142,7 @@ export function LanguageFilterMenuButton() {
       ? 'Showing all'
       : `Showing ${activeLanguages.length} / ${langCount}`
   return (
-    <Popover content={content} open={open} portal ref={setPopover}>
+    <Popover animate content={content} open={open} portal ref={setPopover}>
       <Button
         text={buttonText}
         icon={TranslateIcon}
