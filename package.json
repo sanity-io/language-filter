@@ -47,10 +47,9 @@
     "@sanity/icons": "^2.11.7",
     "@sanity/incompatible-plugin": "^1.0.4",
     "@sanity/ui": "^2.1.0",
-    "lodash": "^4.17.21"
+    "@sanity/util": "^3.36.4"
   },
   "devDependencies": {
-    "@sanity/util": "^3.36.4",
     "@babel/preset-env": "^7.24.4",
     "@babel/preset-react": "^7.24.1",
     "@commitlint/cli": "^19.2.1",
@@ -59,7 +58,6 @@
     "@sanity/plugin-kit": "^3.1.10",
     "@sanity/semantic-release-preset": "^4.1.7",
     "@types/jest": "^29.5.12",
-    "@types/lodash": "^4.17.0",
     "@typescript-eslint/eslint-plugin": "^7.6.0",
     "@typescript-eslint/parser": "^7.6.0",
     "eslint": "^8.57.0",
@@ -81,7 +79,6 @@
     "typescript": "^5.4.4"
   },
   "peerDependencies": {
-    "@sanity/util": "^3.36.4",
     "@sanity/ui": "^2.1.0",
     "react": "^18",
     "react-dom": "^18",
