@@ -1,13 +1,12 @@
-import React from 'react'
 import {
   definePlugin,
-  DocumentLanguageFilterComponent,
+  type DocumentLanguageFilterComponent,
   isObjectSchemaType,
-  ObjectInputProps,
+  type ObjectInputProps,
 } from 'sanity'
 import {FilteredObjectWrapper} from './LanguageFilterObjectInput'
 import {LanguageFilterMenuButton} from './LanguageFilterMenuButton'
-import {LanguageFilterConfig} from './types'
+import type {LanguageFilterConfig} from './types'
 import {isLanguageFilterEnabled} from './filterField'
 import {defaultContextValue, LanguageFilterStudioProvider} from './LanguageFilterStudioContext'
 

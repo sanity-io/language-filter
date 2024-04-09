@@ -10,8 +10,8 @@ import {
   Text,
   useClickOutside,
 } from '@sanity/ui'
-import React, {FormEvent, MouseEventHandler, useCallback, useState} from 'react'
-import styled from 'styled-components'
+import {type FormEvent, type MouseEventHandler, useCallback, useState} from 'react'
+import {styled} from 'styled-components'
 import {usePaneLanguages} from './usePaneLanguages'
 import {
   CheckmarkCircleIcon,
@@ -31,11 +31,11 @@ export function LanguageFilterMenuButton() {
   const {options} = useLanguageFilterStudioContext()
 
   const defaultLanguages = options.supportedLanguages.filter((l) =>
-    options.defaultLanguages?.includes(l.id)
+    options.defaultLanguages?.includes(l.id),
   )
 
   const languageOptions = options.supportedLanguages.filter(
-    (l) => !options.defaultLanguages?.includes(l.id)
+    (l) => !options.defaultLanguages?.includes(l.id),
   )
   const [open, setOpen] = useState(false)
   const {activeLanguages, allSelected, selectAll, selectNone, toggleLanguage} = usePaneLanguages()
@@ -52,7 +52,7 @@ export function LanguageFilterMenuButton() {
         selectNone()
       }
     },
-    [selectAll, selectNone]
+    [selectAll, selectNone],
   )
 
   const handleClick = useCallback(() => setOpen((o) => !o), [])
@@ -64,12 +64,12 @@ export function LanguageFilterMenuButton() {
   const langCount = options.supportedLanguages.length
 
   // Search filter query
-  const [query, setQuery] = useState(``)
+  const [query, setQuery] = useState('')
   const handleQuery = useCallback((event: FormEvent<HTMLInputElement>) => {
     if (event.currentTarget.value) {
       setQuery(event.currentTarget.value)
     } else {
-      setQuery(``)
+      setQuery('')
     }
   }, [])
 
@@ -105,7 +105,7 @@ export function LanguageFilterMenuButton() {
               )}
             </Text>
             <Box flex={1}>
-              <Text>{allSelected ? `Hide all` : `Show all`}</Text>
+              <Text>{allSelected ? 'Hide all' : 'Show all'}</Text>
             </Box>
           </Flex>
         </Button>
@@ -138,7 +138,7 @@ export function LanguageFilterMenuButton() {
 
   const buttonText =
     activeLanguages.length === langCount
-      ? `Showing all`
+      ? 'Showing all'
       : `Showing ${activeLanguages.length} / ${langCount}`
   return (
     <Popover content={content} open={open} portal ref={setPopover}>

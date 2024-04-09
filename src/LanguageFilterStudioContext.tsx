@@ -1,11 +1,11 @@
-import React, {createContext, useContext, useEffect, useMemo, useState} from 'react'
-import {
+import {createContext, useContext, useEffect, useMemo, useState} from 'react'
+import type {
   Language,
   LanguageCallback,
   LanguageFilterConfig,
   LanguageFilterConfigProcessed,
 } from './types'
-import {LayoutProps, useClient} from 'sanity'
+import {type LayoutProps, useClient} from 'sanity'
 import {defaultFilterField} from './filterField'
 import {useSelectedLanguageIds} from './useSelectedLanguageIds'
 
@@ -44,11 +44,11 @@ const LanguageFilterStudioContext =
  * and provide them to a Studio-wide context
  */
 export function LanguageFilterStudioProvider(
-  props: LayoutProps & LanguageFilterStudioContextProps
+  props: LayoutProps & LanguageFilterStudioContextProps,
 ) {
   const client = useClient({apiVersion: '2023-01-01'})
   const [languages, setLanguages] = useState<Language[]>(
-    Array.isArray(props.options.supportedLanguages) ? props.options.supportedLanguages : []
+    Array.isArray(props.options.supportedLanguages) ? props.options.supportedLanguages : [],
   )
   useEffect(() => {
     let asyncLanguages: Language[] = []

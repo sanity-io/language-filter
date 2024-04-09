@@ -1,5 +1,5 @@
-import React, {useMemo} from 'react'
-import {ObjectInputProps, ObjectMember, useFormValue, useSchema} from 'sanity'
+import {useMemo} from 'react'
+import {type ObjectInputProps, type ObjectMember, useFormValue, useSchema} from 'sanity'
 import {useLanguageFilterStudioContext} from './LanguageFilterStudioContext'
 import {isLanguageFilterEnabled} from './filterField'
 

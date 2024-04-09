@@ -1,5 +1,5 @@
 import {defaultFilterField, isLanguageFilterEnabled} from './filterField'
-import {FieldMember, ObjectSchemaType} from 'sanity'
+import type {FieldMember, ObjectSchemaType} from 'sanity'
 
 describe('filterField', () => {
   describe('isLanguageFilterEnabled', () => {
@@ -25,7 +25,7 @@ describe('filterField', () => {
     it('should be disabled when documentTypes is missing and options.languageFilter: false', () => {
       const enabled = isLanguageFilterEnabled(
         {...docType, options: {languageFilter: false}},
-        {supportedLanguages: []}
+        {supportedLanguages: []},
       )
       expect(enabled).toBeFalsy()
     })
@@ -33,7 +33,7 @@ describe('filterField', () => {
     it('should be enabled when documentTypes is contains doc-type name', () => {
       const enabled = isLanguageFilterEnabled(
         {...docType, options: {languageFilter: false}},
-        {supportedLanguages: [], documentTypes: [docType.name]}
+        {supportedLanguages: [], documentTypes: [docType.name]},
       )
       expect(enabled).toBeTruthy()
     })
@@ -41,7 +41,7 @@ describe('filterField', () => {
     it('should be enabled when documentTypes does not contain doc-type name, but options.languageFilter: true', () => {
       const enabled = isLanguageFilterEnabled(
         {...docType, options: {languageFilter: true}},
-        {supportedLanguages: [], documentTypes: []}
+        {supportedLanguages: [], documentTypes: []},
       )
       expect(enabled).toBeTruthy()
     })
@@ -73,6 +73,8 @@ describe('filterField', () => {
         changed: false,
         value: undefined,
       },
+      groups: [],
+      inSelectedGroup: false,
     }
 
     it('should filter -> true for nb field inside local-prefixed object', () => {
@@ -89,7 +91,7 @@ describe('filterField', () => {
       const result = defaultFilterField(
         {...localePrefixedObject, name: 'not-start-with-locale-field'},
         member,
-        ['nb']
+        ['nb'],
       )
       expect(result).toBeTruthy()
     })

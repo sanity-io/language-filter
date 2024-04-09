@@ -1,4 +1,4 @@
-import {FieldMember, FieldsetState, ObjectSchemaType, SanityClient} from 'sanity'
+import type {FieldMember, FieldsetState, ObjectSchemaType, SanityClient} from 'sanity'
 
 export interface LanguageFilterOptions {
   languageFilter?: boolean
@@ -15,13 +15,13 @@ export type Language = {
 
 export type LanguageCallback = (
   client: SanityClient,
-  selectedValue: Record<string, unknown>
+  selectedValue: Record<string, unknown>,
 ) => Promise<Language[]>
 
 export type FilterFieldFunction = (
   enclosingType: ObjectSchemaType,
   field: FieldMember | FieldsetState,
-  selectedLanguageIds: string[]
+  selectedLanguageIds: string[],
 ) => boolean
 
 export interface LanguageFilterConfig {
