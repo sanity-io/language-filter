@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.2](https://github.com/sanity-io/language-filter/compare/v4.0.1...v4.0.2) (2024-04-09)
+
+### Bug Fixes
+
+- animate popover ([6ec06c8](https://github.com/sanity-io/language-filter/commit/6ec06c86d3585ecf5fc7c20c69e783bf31270753))
+
 ## [4.0.1](https://github.com/sanity-io/language-filter/compare/v4.0.0...v4.0.1) (2024-04-09)
 
 ### Bug Fixes
