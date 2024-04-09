@@ -1,5 +1,11 @@
 import {
-  TextInput,
+  CheckmarkCircleIcon,
+  CircleIcon,
+  EyeClosedIcon,
+  EyeOpenIcon,
+  TranslateIcon,
+} from '@sanity/icons'
+import {
   Badge,
   Box,
   Button,
@@ -8,20 +14,15 @@ import {
   Popover,
   Stack,
   Text,
+  TextInput,
   useClickOutside,
 } from '@sanity/ui'
 import {type FormEvent, type MouseEventHandler, useCallback, useState} from 'react'
-import {styled} from 'styled-components'
-import {usePaneLanguages} from './usePaneLanguages'
-import {
-  CheckmarkCircleIcon,
-  CircleIcon,
-  EyeClosedIcon,
-  EyeOpenIcon,
-  TranslateIcon,
-} from '@sanity/icons'
 import {TextWithTone} from 'sanity'
+import {styled} from 'styled-components'
+
 import {useLanguageFilterStudioContext} from './LanguageFilterStudioContext'
+import {usePaneLanguages} from './usePaneLanguages'
 
 const StyledBox = styled(Box)`
   max-height: calc(100vh - 200px);

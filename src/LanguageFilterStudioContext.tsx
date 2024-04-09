@@ -1,12 +1,13 @@
 import {createContext, useContext, useEffect, useMemo, useState} from 'react'
+import {type LayoutProps, useClient} from 'sanity'
+
+import {defaultFilterField} from './filterField'
 import type {
   Language,
   LanguageCallback,
   LanguageFilterConfig,
   LanguageFilterConfigProcessed,
 } from './types'
-import {type LayoutProps, useClient} from 'sanity'
-import {defaultFilterField} from './filterField'
 import {useSelectedLanguageIds} from './useSelectedLanguageIds'
 
 export interface LanguageFilterStudioContextProps {

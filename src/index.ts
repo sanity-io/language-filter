@@ -1,16 +1,13 @@
 /**
  * Plugin function
  */
-export {languageFilter} from './plugin'
-
 export {defaultFilterField, isLanguageFilterEnabled} from './filterField'
-
+export {useLanguageFilterStudioContext} from './LanguageFilterStudioContext'
+export {languageFilter} from './plugin'
 export type {
-  LanguageFilterConfig,
-  LanguageFilterSchema,
-  LanguageFilterOptions,
   FilterFieldFunction,
   Language,
+  LanguageFilterConfig,
+  LanguageFilterOptions,
+  LanguageFilterSchema,
 } from './types'
-
-export {useLanguageFilterStudioContext} from './LanguageFilterStudioContext'
