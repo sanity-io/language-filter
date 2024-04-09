@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.1](https://github.com/sanity-io/language-filter/compare/v4.0.0...v4.0.1) (2024-04-09)
+
+### Bug Fixes
+
+- add provenance ([4f99791](https://github.com/sanity-io/language-filter/commit/4f99791881ab96a16c455d466d184b56b0020402))
+
 ## [4.0.0](https://github.com/sanity-io/language-filter/compare/v3.2.2...v4.0.0) (2024-04-09)
 
 ### ⚠ BREAKING CHANGES
