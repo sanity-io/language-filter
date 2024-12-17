@@ -44,10 +44,10 @@
     "watch": "pkg-utils watch"
   },
   "dependencies": {
-    "@sanity/icons": "^2.11.7",
-    "@sanity/incompatible-plugin": "^1.0.4",
-    "@sanity/ui": "^2.1.0",
-    "@sanity/util": "^3.36.4"
+    "@sanity/icons": "^3.5.3",
+    "@sanity/incompatible-plugin": "^1.0.5",
+    "@sanity/ui": "^2.10.11",
+    "@sanity/util": "^3.67.1"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.24.4",
@@ -71,17 +71,15 @@
     "lint-staged": "^15.2.2",
     "prettier": "^3.2.5",
     "prettier-plugin-packagejson": "^2.4.14",
-    "react": "^18.2.0",
+    "react": "^18.3.1",
     "rimraf": "^4.4.1",
-    "sanity": "^3.36.4",
+    "sanity": "^3.67.1",
     "styled-components": "^6.1.8",
     "ts-jest": "^29.1.2",
     "typescript": "^5.4.4"
   },
   "peerDependencies": {
-    "@sanity/ui": "^2.1.0",
-    "react": "^18",
-    "react-dom": "^18",
+    "react": "^18 || ^19",
     "sanity": "^3.36.4",
     "styled-components": "^6.1"
   },
