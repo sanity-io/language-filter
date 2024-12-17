@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.3](https://github.com/sanity-io/language-filter/compare/v4.0.2...v4.0.3) (2024-12-17)
+
+### Bug Fixes
+
+- make `@sanity/util` a regular dependency again ([15b9f6c](https://github.com/sanity-io/language-filter/commit/15b9f6c0b546f671ab4de0eca216251ed5dbc305))
+- make react 19 compatible ([#70](https://github.com/sanity-io/language-filter/issues/70)) ([1c92729](https://github.com/sanity-io/language-filter/commit/1c927297a5107e14e8128d05fa9065e26edefc9d))
+
 ## [4.0.2](https://github.com/sanity-io/language-filter/compare/v4.0.1...v4.0.2) (2024-04-09)
 
 ### Bug Fixes
