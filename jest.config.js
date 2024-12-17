@@ -1,15 +1,10 @@
-/** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
+/** @type {import('ts-jest/dist/types').JestConfigWithTsJest} */
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   testPathIgnorePatterns: ['.yalc', 'node_modules', '.idea', 'lib', '.parcel-cache'],
-  globals: {
-    'ts-jest': {
-      babelConfig: true,
-    },
-  },
   transform: {
-    '^.+\\.(ts|tsx)?$': 'ts-jest',
+    '^.+\\.(ts|tsx)?$': ['ts-jest', {babelConfig: true}],
     '^.+\\.(mjs|js|jsx)$': 'babel-jest',
   },
   transformIgnorePatterns: ['node_modules/(?!(nanoid|uuid|get-random-values-esm))'],
