@@ -25,7 +25,8 @@ export function FilteredObjectInput(props: ObjectInputProps) {
       .filter((member) => {
         return (
           (member.kind === 'field' && filterField(schemaType, member, selectedLanguageIds)) ||
-          member.kind === 'fieldSet'
+          member.kind === 'fieldSet' ||
+          member.kind === 'error'
         )
       })
       .map((member) => {
