@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.4](https://github.com/sanity-io/language-filter/compare/v4.0.3...v4.0.4) (2025-03-31)
+
+### Bug Fixes
+
+- prevent the plugin from filtering out 'FieldError' members ([c551683](https://github.com/sanity-io/language-filter/commit/c551683302803290d133b0f67d0c6bb966c6e5a5))
+
 ## [4.0.3](https://github.com/sanity-io/language-filter/compare/v4.0.2...v4.0.3) (2024-12-17)
 
 ### Bug Fixes
