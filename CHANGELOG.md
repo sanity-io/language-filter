@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.5](https://github.com/sanity-io/language-filter/compare/v4.0.4...v4.0.5) (2025-07-10)
+
+### Bug Fixes
+
+- **deps:** allow studio v4 in peer dep ranges ([#73](https://github.com/sanity-io/language-filter/issues/73)) ([14abbd1](https://github.com/sanity-io/language-filter/commit/14abbd11cc8090ed504a8cdef04d7f3d1cf95248))
+
 ## [4.0.4](https://github.com/sanity-io/language-filter/compare/v4.0.3...v4.0.4) (2025-03-31)
 
 ### Bug Fixes
