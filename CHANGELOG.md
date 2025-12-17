@@ -5,6 +5,11 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.0.6 (2025-12-17)</small>
+
+- fix(deps): allow sanity v5 as peer dependency (#74) ([f472f43](https://github.com/sanity-io/language-filter/commit/f472f43)), closes [#74](https://github.com/sanity-io/language-filter/issues/74)
+- Update README.md ([e363cec](https://github.com/sanity-io/language-filter/commit/e363cec))
+
 ## [4.0.5](https://github.com/sanity-io/language-filter/compare/v4.0.4...v4.0.5) (2025-07-10)
 
 ### Bug Fixes
