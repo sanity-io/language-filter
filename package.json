@@ -24,7 +24,6 @@
   },
   "main": "./lib/index.js",
   "module": "./lib/index.esm.js",
-  "source": "./src/index.ts",
   "types": "./lib/index.d.ts",
   "files": [
     "src",
@@ -46,8 +45,8 @@
   "dependencies": {
     "@sanity/icons": "^3.5.3",
     "@sanity/incompatible-plugin": "^1.0.5",
-    "@sanity/ui": "^2.10.11",
-    "@sanity/util": "^3.67.1"
+    "@sanity/ui": "^3.1.11",
+    "@sanity/util": "^5.0.1"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.24.4",
@@ -72,6 +71,7 @@
     "prettier": "^3.2.5",
     "prettier-plugin-packagejson": "^2.4.14",
     "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "rimraf": "^4.4.1",
     "sanity": "^3.67.1",
     "styled-components": "^6.1.8",
@@ -80,7 +80,7 @@
   },
   "peerDependencies": {
     "react": "^18 || ^19",
-    "sanity": "^3.36.4 || ^4.0.0-0",
+    "sanity": "^3.36.4 || ^4.0.0-0 || ^5",
     "styled-components": "^6.1"
   },
   "engines": {
