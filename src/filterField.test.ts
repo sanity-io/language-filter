@@ -79,18 +79,12 @@ describe('filterField', () => {
     }
 
     it('should filter -> true for nb field inside local-prefixed object', () => {
-      const result = defaultFilterField(localePrefixedObject, member, ['nb'], {
-        _key: 'nb',
-        _type: 'locale_parent',
-      })
+      const result = defaultFilterField(localePrefixedObject, member, ['nb'])
       expect(result).toBeTruthy()
     })
 
     it('should filter -> false for unselected field inside local-prefixed object', () => {
-      const result = defaultFilterField(localePrefixedObject, member, ['other'], {
-        _key: 'other',
-        _type: 'locale_parent',
-      })
+      const result = defaultFilterField(localePrefixedObject, member, ['other'])
       expect(result).toBeFalsy()
     })
 
@@ -99,10 +93,6 @@ describe('filterField', () => {
         {...localePrefixedObject, name: 'not-start-with-locale-field'},
         member,
         ['nb'],
-        {
-          _key: 'nb',
-          _type: 'not-start-with-locale-field',
-        },
       )
       expect(result).toBeTruthy()
     })

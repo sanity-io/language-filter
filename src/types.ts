@@ -22,7 +22,6 @@ export type FilterFieldFunction = (
   enclosingType: ObjectSchemaType,
   field: FieldMember | FieldsetState,
   selectedLanguageIds: string[],
-  parentValue: Record<string, unknown> | undefined,
 ) => boolean
 
 export interface LanguageFilterConfig {
