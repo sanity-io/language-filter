@@ -19,14 +19,12 @@ export function FilteredObjectInput(props: ObjectInputProps) {
   const {members: membersProp, schemaType, renderDefault, ...restProps} = props
   const {selectedLanguageIds, options} = useLanguageFilterStudioContext()
   const {filterField} = options
-  const parentValue = props.value
 
   const members: ObjectMember[] = useMemo(() => {
     return membersProp
       .filter((member) => {
         return (
-          (member.kind === 'field' &&
-            filterField(schemaType, member, selectedLanguageIds, parentValue)) ||
+          (member.kind === 'field' && filterField(schemaType, member, selectedLanguageIds)) ||
           member.kind === 'fieldSet' ||
           member.kind === 'error'
         )
@@ -40,7 +38,7 @@ export function FilteredObjectInput(props: ObjectInputProps) {
               members: member.fieldSet.members.filter((fieldsetMember) => {
                 return (
                   fieldsetMember.kind === 'field' &&
-                  filterField(schemaType, fieldsetMember, selectedLanguageIds, parentValue)
+                  filterField(schemaType, fieldsetMember, selectedLanguageIds)
                 )
               }),
             },
@@ -48,7 +46,7 @@ export function FilteredObjectInput(props: ObjectInputProps) {
         }
         return member
       })
-  }, [schemaType, membersProp, filterField, selectedLanguageIds, parentValue])
+  }, [schemaType, membersProp, filterField, selectedLanguageIds])
 
   return renderDefault({...restProps, members, schemaType, renderDefault})
 }

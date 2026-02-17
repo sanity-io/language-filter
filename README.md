@@ -67,7 +67,7 @@ Add it as a plugin in sanity.config.ts (or .js), and configure it:
             defaultLanguages: ['nb'],
             // Only show language filter for document type `page` (schemaType.name)
             documentTypes: ['page'],
-            filterField: (enclosingType, member, selectedLanguageIds, parentValue) =>
+            filterField: (enclosingType, member, selectedLanguageIds) =>
               !enclosingType.name.startsWith('locale') || selectedLanguageIds.includes(member.name),
        })
      ]
@@ -81,12 +81,8 @@ Config properties:
   -- A function that returns a promise resolving to an array of language objects with `id` and `title`. This is useful if you want to fetch the list of supported languages from an external source. See [Loading languages](#loading-languages) for more details.
 - `defaultLanguages` (optional) is an array of strings where each entry must match an `id` from the `supportedLanguages` array. These languages will be listed by default and will not be possible to unselect. If no `defaultLanguages` is configured, all localized fields will be selected by default.
 - `documentTypes` (optional) is an array of strings where each entry must match a `name` from your document schemas. If defined, this property will be used to conditionally show the language filter on specific document schema types. If undefined, the language filter will show on all document schema types.
-- `filterField` (optional) is a function that must return true if the field should be displayed. It receives:
-  - `enclosingType` (for example, the object type containing localized fields)
-  - `field` (the field/fieldset member being rendered)
-  - `selectedLanguageIds` (an array of currently selected language ids)
-  - `parentValue` (the current enclosing object value; `undefined` when not available)
-  This function is called for all fields and fieldsets in objects for documents that have language filter enabled.
+- `filterField` (optional) is a function that must return true if the field should be displayed. It is passed the enclosing type (e.g the object type containing the localized fields, the field, and an array of the currently selected language ids.
+  This function is called for all fields and in objects for documents that have language filter enabled.
   _Default:_ `!enclosingType.name.startsWith('locale') || selectedLanguageIds.includes(field.name)`
 - `apiVersion` (optional) used for the Sanity Client when asynchronously loading languages.
 
