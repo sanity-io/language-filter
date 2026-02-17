@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.1.0 (2026-02-17)
+
+- feat: add parentValue to filterField function (#77) ([8d75fdb](https://github.com/sanity-io/language-filter/commit/8d75fdb)), closes [#77](https://github.com/sanity-io/language-filter/issues/77)
+- Revert "chore: add parentValue to filterField function (#75)" (#76) ([57d99ef](https://github.com/sanity-io/language-filter/commit/57d99ef)), closes [#75](https://github.com/sanity-io/language-filter/issues/75) [#76](https://github.com/sanity-io/language-filter/issues/76) [#75](https://github.com/sanity-io/language-filter/issues/75)
+- chore: add parentValue to filterField function (#75) ([193ec36](https://github.com/sanity-io/language-filter/commit/193ec36)), closes [#75](https://github.com/sanity-io/language-filter/issues/75)
+
 ## <small>4.0.6 (2025-12-17)</small>
 
 - fix(deps): allow sanity v5 as peer dependency (#74) ([f472f43](https://github.com/sanity-io/language-filter/commit/f472f43)), closes [#74](https://github.com/sanity-io/language-filter/issues/74)
